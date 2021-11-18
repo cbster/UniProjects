@@ -37,12 +37,12 @@ public class Caesar {  // Please don't kick me out for making this function, it 
                         String str_char = "" + ch;
                         int pos = hm_lower.get(str_char);
                         String key = key_to_val(hm_lower, ((pos % 26) + (shift_by % 26)) % 26); // Modular addition to avoid array out of bounds exception
-                        result = result.concat(key);
+                        result = result.concat(alphabet_lower[pos+shift_by]);
                     } else if (Character.isUpperCase(ch)) { // Upper case letters get mapped to hm_upper
                         String str_char = "" + ch;
                         int pos = hm_upper.get(str_char);
                         String key = key_to_val(hm_upper, ((pos % 26) + (shift_by % 26)) % 26); // Modular addition to avoid array out of bounds exception
-                        result = result.concat(key);
+                        result = result.concat(alphabet_lower[pos+shift_by].toUpperCase());
                     }
                 } else {
                     result = result.concat(String.valueOf(ch)); // If not a letter, leave it be
