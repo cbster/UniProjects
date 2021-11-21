@@ -53,9 +53,9 @@ public class Looping {
                     palCheck(testNumber, 1);
                 } catch (NumberFormatException e) {
                     palCheckBig(new BigInteger(String.valueOf(testNumber)), 1, testNumber);
-                    }
                 }
-            System.out.println("alle Zahlen werden auch durch Abbruch per Ueberlauf gefunden");
             }
+            System.out.println("alle Zahlen werden auch durch Abbruch per Ueberlauf gefunden");
         }
     }
+}

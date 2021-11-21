@@ -8,7 +8,8 @@ public class Caesar {
         String word;
         Map<String, Integer> hm_alphabet
                 = new HashMap<>();
-        String[] alphabet_lower = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        String[] alphabet_lower = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+                "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         for (i = 0; i < (alphabet_lower.length); i++) { // Makes a hashmap linking a-z to 0-25
             hm_alphabet.put(alphabet_lower[i], (i));
         }
@@ -21,8 +22,8 @@ public class Caesar {
                     if (Character.isLowerCase(ch)) { // Lower case letters get mapped to hm_alphabet
                         String str_char = "" + ch;
                         int pos = hm_alphabet.get(str_char);
-                        result = result.concat(alphabet_lower[((pos % 26) + (shift_by % 26)) % 26]);
-                    } else if (Character.isUpperCase(ch)) { // Upper case letters get mapped to hm_upper
+                        result = result.concat(alphabet_lower[((pos % 26) + (shift_by % 26)) % 26]); // Modular arithmetic to stay in alphabet
+                    } else if (Character.isUpperCase(ch)) { // Upper case letters remain upper-case
                         String str_char = "" + ch;
                         int pos = hm_alphabet.get(str_char.toLowerCase());
                         result = result.concat(alphabet_lower[((pos % 26) + (shift_by % 26)) % 26].toUpperCase());
