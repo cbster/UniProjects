@@ -1,13 +1,13 @@
 public class Caesar {
     public static void main(String[] args) {
-        int shift_by = (Integer.parseInt(args[0]) % 26);
-        for (int i = 1; i < (args.length); i++) { // For each argument, starting at 1 (0 is occupied by shift_by), do...
-            String result = "";
-            for (char ch : args[i].toCharArray()) {
-                result = (Character.isLetter(ch)) ?
-                        result + Character.toString(ch + shift_by) : result.concat(Character.toString(ch));
+        for (int i = 1; i < (args.length); i++) { // For each argument, starting at 1 (0 is occupied by the number to shift letters by), do...
+            String result = ""; // Reset result string for each argument
+            for (char ch : args[i].toCharArray()) { // For each character in the argument
+                result = (Character.isLetter(ch)) ? // Ternary check
+                        result + Character.toString(ch + (Integer.parseInt(args[0]) % 26)) // If char is a letter, shift and add to result
+                        : result.concat(Character.toString(ch)); // If char is not a letter, leave it be and add to result
             }
-            System.out.println(result); // Print concatenated sentence
+            System.out.println(result); // Print result, then loop to next arg or terminate
         }
     }
 }
