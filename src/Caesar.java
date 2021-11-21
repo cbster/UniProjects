@@ -6,11 +6,11 @@ public class Caesar {
         int shift_by = Integer.parseInt(args[0]);
         int i;
         String word;
-        Map<String, Integer> hm_lower
-                = new HashMap<String, Integer>();
-        String alphabet_lower[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        Map<String, Integer> hm_alphabet
+                = new HashMap<>();
+        String[] alphabet_lower = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
         for (i = 0; i < (alphabet_lower.length); i++) { // Makes a hashmap linking a-z to 0-25
-            hm_lower.put(alphabet_lower[i], new Integer(i));
+            hm_alphabet.put(alphabet_lower[i], (i));
         }
         for (i = 1; i < (args.length); i++) { // For each argument, starting at 1 (0 is occupied by shift_by), do...
             String result = "";
@@ -18,13 +18,13 @@ public class Caesar {
             char[] split_word = word.toCharArray(); // Splits word into chars
             for (char ch : split_word) {
                 if (Character.isLetter(ch)) { // If it's a letter, act upon it
-                    if (Character.isLowerCase(ch)) { // Lower case letters get mapped to hm_lower
+                    if (Character.isLowerCase(ch)) { // Lower case letters get mapped to hm_alphabet
                         String str_char = "" + ch;
-                        int pos = hm_lower.get(str_char);
+                        int pos = hm_alphabet.get(str_char);
                         result = result.concat(alphabet_lower[((pos % 26) + (shift_by % 26)) % 26]);
                     } else if (Character.isUpperCase(ch)) { // Upper case letters get mapped to hm_upper
                         String str_char = "" + ch;
-                        int pos = hm_lower.get(str_char.toLowerCase());
+                        int pos = hm_alphabet.get(str_char.toLowerCase());
                         result = result.concat(alphabet_lower[((pos % 26) + (shift_by % 26)) % 26].toUpperCase());
                     }
                 } else {
