@@ -1,14 +1,20 @@
-import java.util.HashSet;
-import java.util.Set;
-
 public class Deduplikator {
     public static void main(String[] args) {
-        Set<Double> nums = new HashSet<>();
-        for (String arg : args) {
-            nums.add(Double.parseDouble(arg));
+        double[] nums = new double[args.length];
+        for (int i = 0; i < args.length; i++) {
+            nums[i] = (Double.parseDouble(args[i]));
         }
-        for (Double num : nums) {
-            System.out.println(num);
+        for (int i = 0; i < nums.length; i++) {
+            boolean found = false;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] == nums[j]) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println(nums[i]);
+            }
         }
     }
 }
