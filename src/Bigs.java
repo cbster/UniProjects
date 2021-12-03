@@ -27,7 +27,7 @@ class Bigs {
 
     // gibt das Ziffernfeld n in lesbarer dezimaler Form aus
     static void print(int[] n) {
-        for (int i = n.length; i >= 0; i--) {
+        for (int i = n.length - 1; i >= 0; i--) {
             System.out.print(n[i]);
         }
     }
