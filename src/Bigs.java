@@ -1,6 +1,29 @@
 class Bigs {
     // addiert die Ziffernfelder a und b
-    public static int[ ] add (int[ ] a, int[ ] b) { /* TODO */ }
+    public static int[] add(int[] a, int[] b) {
+        int[] sum = new int[Math.max(a.length, b.length)];
+
+        for (int i = 0; i < sum.length; i++) {
+            sum[i] = a[i] + b[i];
+        }
+        for (int i = 0; i < sum.length - 1; i++) {
+            if (sum[i] > 9) {
+                sum[i] = sum[i] - 10;
+                sum[i + 1]++;
+            }
+        }
+        if (sum[sum.length - 1] > 9) {
+            int[] finalSum = new int[sum.length + 1];
+            sum[sum.length - 1] = sum[sum.length - 1] - 10;
+            finalSum[sum.length] = 1;
+            for (int i = 0; i < sum.length; i++) {
+                finalSum[i] = sum[i];
+            }
+            return finalSum;
+        } else {
+            return sum;
+        }
+    }
 
     // gibt das Ziffernfeld n in lesbarer dezimaler Form aus
     static void print(int[] n) {
@@ -53,10 +76,35 @@ class Bigs {
     }
 
     // kopiert den Wert von a
-    static int[ ] copy(int[ ] n)             { /* TODO */ }
+    static int[] copy(int[] n) {
+        int[] clone = new int[n.length];
+        for (int i = 0; i < n.length; i++) {
+            clone[i] = n[i];
+        }
+        return clone;
+    }
 
     // multipliziert das Ziffernfeld a mit einer int-Zahl
-    static int[ ] times(int[ ] n, int d)     { /* TODO */ }
+    static int[] times(int[] n, int d) {
+        int[] product = new int[n.length + (String.valueOf(d).length())];
+        for (int i = 0; i < n.length; i++) {
+            product[i] = n[i] * d;
+        }
+        for (int i = 0; i < product.length - 1; i++) {
+            while (product[i] > 9) {
+                product[i] = product[i] - 10;
+                product[i + 1]++;
+            }
+        }
+        if (ok(product)) {
+            return product;
+        } else {
+            int[] newProduct = new int[product.length - 1];
+            for (int i = 0; i < product.length - 1; i++) {
+                newProduct[i] = product[i];
+            } return newProduct;
+        }
+    }
 
     // multipliziert das Ziffernfeld n mit 10
     static int[] times10(int[] n) {
