@@ -46,20 +46,17 @@ class Bigs {
 
     // konstruiert ein einstelliges Ziffernfeld aus d
     static int[] digit(int d) {
-        int[] a = {d};
-        return a;
+        return new int[] {d};
     }
 
     // konstruiert das Ziffernfeld, welches den Wert Null repraesentiert
     static int[] Null() {
-        int[] a = {0};
-        return a;
+        return new int[] {0};
     }
 
     // konstruiert das Ziffernfeld, welches den Wert Eins repraesentiert
     static int[] One() {
-        int[] a = {1};
-        return a;
+        return new int[] {1};
     }
 
     // Rest des Ziffernfeldes n bei Division durch 10 (eine int-Zahl!)
