@@ -4,7 +4,7 @@ class Bigs {
         int[] sum = new int[Math.max(a.length, b.length)];
 
         for (int i = 0; i < sum.length; i++) {
-            sum[i] = a[i] + b[i];
+            sum[i] = a[i] + b[i]; // TODO Array out of bounds exception? Two numbers of different lengths?
         }
         for (int i = 0; i < sum.length - 1; i++) {
             if (sum[i] > 9) {
@@ -125,10 +125,8 @@ class Bigs {
             }
         }
         for (int i = 0; i < product.length - 1; i++) {
-            while (product[i] > 9) {
-                product[i] = product[i] - 10;
-                product[i + 1]++;
-            }
+            product[i+1] += product[i] / 10;
+            product[i] = product[i] % 10;
         }
         if (ok(product)) {
             return product;
