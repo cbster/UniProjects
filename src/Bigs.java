@@ -1,10 +1,24 @@
 class Bigs {
     // addiert die Ziffernfelder a und b
     public static int[] add(int[] a, int[] b) {
-        int[] sum = new int[Math.max(a.length, b.length)];
+        int[] sum = new int[Math.max(a.length, b.length) + 1];
 
-        for (int i = 0; i < sum.length; i++) {
-            sum[i] = a[i] + b[i]; // TODO Array out of bounds exception? Two numbers of different lengths?
+        if (a.length > b.length) {
+            for (int i = 0; i < sum.length - 1; i++) {
+                try {
+                    sum[i] = a[i] + b[i];
+                } catch (IndexOutOfBoundsException e) {
+                    sum[i] = a[i];
+                }
+            }
+        } else {
+            for (int i = 0; i < sum.length - 1; i++) {
+                try {
+                    sum[i] = a[i] + b[i];
+                } catch (IndexOutOfBoundsException e) {
+                    sum[i] = b[i];
+                }
+            }
         }
         for (int i = 0; i < sum.length - 1; i++) {
             if (sum[i] > 9) {
@@ -12,18 +26,16 @@ class Bigs {
                 sum[i + 1]++;
             }
         }
-        if (sum[sum.length - 1] > 9) {
-            int[] finalSum = new int[sum.length + 1];
-            sum[sum.length - 1] = sum[sum.length - 1] - 10;
-            finalSum[sum.length] = 1;
-            for (int i = 0; i < sum.length; i++) {
-                finalSum[i] = sum[i];
+        while (!ok(sum)) {
+            int[] newSum = new int[sum.length - 1];
+            for (int i = 0; i < sum.length - 1; i++) {
+                newSum[i] = sum[i];
             }
-            return finalSum;
-        } else {
-            return sum;
+            sum = newSum;
         }
+        return sum;
     }
+
 
     // gibt das Ziffernfeld n in lesbarer dezimaler Form aus
     static void print(int[] n) {
