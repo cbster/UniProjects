@@ -26,6 +26,11 @@ class Bigs {
                 sum[i + 1]++;
             }
         }
+        sum = removeZeros(sum);
+        return sum;
+    }
+
+    private static int[] removeZeros(int[] sum) {
         while (!ok(sum)) {
             int[] newSum = new int[sum.length - 1];
             for (int i = 0; i < sum.length - 1; i++) {
@@ -36,7 +41,6 @@ class Bigs {
         return sum;
     }
 
-
     // gibt das Ziffernfeld n in lesbarer dezimaler Form aus
     static void print(int[] n) {
         for (int i = n.length - 1; i >= 0; i--) {
@@ -46,17 +50,17 @@ class Bigs {
 
     // konstruiert ein einstelliges Ziffernfeld aus d
     static int[] digit(int d) {
-        return new int[] {d};
+        return new int[]{d};
     }
 
     // konstruiert das Ziffernfeld, welches den Wert Null repraesentiert
     static int[] Null() {
-        return new int[] {0};
+        return new int[]{0};
     }
 
     // konstruiert das Ziffernfeld, welches den Wert Eins repraesentiert
     static int[] One() {
-        return new int[] {1};
+        return new int[]{1};
     }
 
     // Rest des Ziffernfeldes n bei Division durch 10 (eine int-Zahl!)
@@ -67,21 +71,13 @@ class Bigs {
     // ganzzahliger Quotient bei Division durch 10
     static int[] div10(int[] n) {
         if (n.length == 1) {
-            return new int[] {0};
+            return new int[]{0};
         }
         int[] quotArr = new int[n.length - 1];
         for (int i = n.length - 1; i > 0; i--) {
             quotArr[quotArr.length - i] = n[n.length - i];
         }
-        if (ok(quotArr)) {
-            return quotArr;
-        } else {
-            int[] newQuot = new int[quotArr.length - 1];
-            for (int i = 0; i < quotArr.length - 1; i++) {
-                newQuot[i] = quotArr[i];
-            }
-            return newQuot;
-        }
+        return removeZeros(quotArr);
     }
 
     // Umwandlung einer int-Zahl in ein Ziffernfeld
@@ -107,7 +103,7 @@ class Bigs {
     // multipliziert das Ziffernfeld a mit einer int-Zahl
     static int[] times(int[] n, int d) {
         if (n[0] == 0 && n.length == 1) {
-            return new int[] {0};
+            return new int[]{0};
         }
         int[] product = new int[n.length + (String.valueOf(d).length())];
         for (int i = 0; i < n.length; i++) {
@@ -119,40 +115,26 @@ class Bigs {
                 product[i + 1]++;
             }
         }
-        if (ok(product)) {
-            return product;
-        } else {
-            int[] newProduct = new int[product.length - 1];
-            for (int i = 0; i < product.length - 1; i++) {
-                newProduct[i] = product[i];
-            } return newProduct;
-        }
+        return removeZeros(product);
     }
 
     // multipliziert das Ziffernfeld n mit 10
     static int[] times10(int[] n) {
         if (n[0] == 0 && n.length == 1) {
-            return new int[] {0};
+            return new int[]{0};
         }
         int[] tenProduct = new int[n.length + 1];
         for (int i = 0; i < n.length; i++) {
             tenProduct[i + 1] = n[i];
         }
-        tenProduct [0] = 0;
-        if (ok(tenProduct)) {
-            return tenProduct;
-        } else {
-            int[] newProduct = new int[tenProduct.length - 1];
-            for (int i = 0; i < tenProduct.length - 1; i++) {
-                newProduct[i] = tenProduct[i];
-            } return newProduct;
-        }
+        tenProduct[0] = 0;
+        return removeZeros(tenProduct);
     }
 
     // multipliziert zwei Ziffernfelder
     static int[] times(int[] a, int[] b) {
         if ((a[0] == 0 && a.length == 1) || (b[0] == 0 && b.length == 1)) {
-            return new int[] {0};
+            return new int[]{0};
         }
         int[] product = new int[a.length + b.length];
         for (int i = 0; i < a.length; i++) {
@@ -161,17 +143,10 @@ class Bigs {
             }
         }
         for (int i = 0; i < product.length - 1; i++) {
-            product[i+1] += product[i] / 10;
+            product[i + 1] += product[i] / 10;
             product[i] = product[i] % 10;
         }
-        if (ok(product)) {
-            return product;
-        } else {
-            int[] newProduct = new int[product.length - 1];
-            for (int i = 0; i < product.length - 1; i++) {
-                newProduct[i] = product[i];
-            } return newProduct;
-        }
+        return removeZeros(product);
     }
 
     // Quadratzahl eines Ziffernfeldes
@@ -186,18 +161,13 @@ class Bigs {
 
     // Test auf kleiner-Relation zweier Ziffernfelder: a < b ?
     static boolean less(int[] a, int[] b) {
-        if (a.length < b.length) {
-            return true;
+        if (a.length != b.length) {
+            return b.length > a.length;
         }
-        for (int i = 1; i <= a.length; i++) {
-            try {
-                if (a[a.length - i] < b[b.length - i]) {
-                    return true;
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                break;
+        for (int i = a.length - 1; i >= 0; i--) {
+            if (a[i] != b[i]) {
+                return b[i] > a[i];
             }
-
         }
         return false;
     }
@@ -222,12 +192,12 @@ class Bigs {
         if (n.length == 0) {
             return false;
         }
-        for (int num: n) {
+        for (int num : n) {
             if (num > 9 || num < 0) {
                 return false;
             }
         }
-        if ((n[n.length-1] < 1) && (n.length != 1)) {
+        if ((n[n.length - 1] < 1) && (n.length != 1)) {
             return false;
         }
         return true;
