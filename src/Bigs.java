@@ -44,7 +44,7 @@ class Bigs {
     // gibt das Ziffernfeld n in lesbarer dezimaler Form aus
     static void print(int[] n) {
         for (int i = n.length - 1; i >= 0; i--) {
-            System.out.print(n[i]);
+            System.out.print((((n.length - i) % 68 == 0) ? n[i] + "\\\n" : n[i]));
         }
     }
 
