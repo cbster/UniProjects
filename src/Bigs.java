@@ -66,11 +66,22 @@ class Bigs {
 
     // ganzzahliger Quotient bei Division durch 10
     static int[] div10(int[] n) {
-        int[] quotArr = new int[n.length - 1];
-        for (int i = 0; i < n.length - 1; i++) {
-            quotArr[i] = n[i];
+        if (n.length == 1) {
+            return new int[] {0};
         }
-        return quotArr;
+        int[] quotArr = new int[n.length - 1];
+        for (int i = n.length - 1; i > 0; i--) {
+            quotArr[quotArr.length - i] = n[n.length - i];
+        }
+        if (ok(quotArr)) {
+            return quotArr;
+        } else {
+            int[] newQuot = new int[quotArr.length - 1];
+            for (int i = 0; i < quotArr.length - 1; i++) {
+                newQuot[i] = quotArr[i];
+            }
+            return newQuot;
+        }
     }
 
     // Umwandlung einer int-Zahl in ein Ziffernfeld
@@ -95,6 +106,9 @@ class Bigs {
 
     // multipliziert das Ziffernfeld a mit einer int-Zahl
     static int[] times(int[] n, int d) {
+        if (n[0] == 0 && n.length == 1) {
+            return new int[] {0};
+        }
         int[] product = new int[n.length + (String.valueOf(d).length())];
         for (int i = 0; i < n.length; i++) {
             product[i] = n[i] * d;
@@ -117,16 +131,29 @@ class Bigs {
 
     // multipliziert das Ziffernfeld n mit 10
     static int[] times10(int[] n) {
+        if (n[0] == 0 && n.length == 1) {
+            return new int[] {0};
+        }
         int[] tenProduct = new int[n.length + 1];
         for (int i = 0; i < n.length; i++) {
             tenProduct[i + 1] = n[i];
         }
         tenProduct [0] = 0;
-        return tenProduct;
+        if (ok(tenProduct)) {
+            return tenProduct;
+        } else {
+            int[] newProduct = new int[tenProduct.length - 1];
+            for (int i = 0; i < tenProduct.length - 1; i++) {
+                newProduct[i] = tenProduct[i];
+            } return newProduct;
+        }
     }
 
     // multipliziert zwei Ziffernfelder
     static int[] times(int[] a, int[] b) {
+        if ((a[0] == 0 && a.length == 1) || (b[0] == 0 && b.length == 1)) {
+            return new int[] {0};
+        }
         int[] product = new int[a.length + b.length];
         for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < b.length; j++) {
@@ -163,9 +190,14 @@ class Bigs {
             return true;
         }
         for (int i = 1; i <= a.length; i++) {
-            if (a[a.length - i] < b[b.length - i]) {
-                return true;
+            try {
+                if (a[a.length - i] < b[b.length - i]) {
+                    return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
             }
+
         }
         return false;
     }
@@ -191,7 +223,7 @@ class Bigs {
             return false;
         }
         for (int num: n) {
-            if (num > 9) {
+            if (num > 9 || num < 0) {
                 return false;
             }
         }
