@@ -1,24 +1,11 @@
 class Bigs {
     // addiert die Ziffernfelder a und b
     public static int[] add(int[] a, int[] b) {
-        int[] sum = new int[Math.max(a.length, b.length) + 1];
-
-        if (a.length > b.length) {
-            for (int i = 0; i < sum.length - 1; i++) {
-                try {
-                    sum[i] = a[i] + b[i];
-                } catch (IndexOutOfBoundsException e) {
-                    sum[i] = a[i];
-                }
-            }
-        } else {
-            for (int i = 0; i < sum.length - 1; i++) {
-                try {
-                    sum[i] = a[i] + b[i];
-                } catch (IndexOutOfBoundsException e) {
-                    sum[i] = b[i];
-                }
-            }
+        int[] longerArr = (a.length > b.length) ? a : b;
+        int[] sum = new int[longerArr.length + 1];
+        System.arraycopy(longerArr, 0, sum, 0, longerArr.length);
+        for (int i = 0; i < Math.min(a.length, b.length); i++) {
+            sum[i] = a[i] + b[i];
         }
         for (int i = 0; i < sum.length - 1; i++) {
             if (sum[i] > 9) {
@@ -33,9 +20,7 @@ class Bigs {
     private static int[] removeZeros(int[] sum) {
         while (!ok(sum)) {
             int[] newSum = new int[sum.length - 1];
-            for (int i = 0; i < sum.length - 1; i++) {
-                newSum[i] = sum[i];
-            }
+            System.arraycopy(sum, 0, newSum, 0, sum.length - 1);
             sum = newSum;
         }
         return sum;
@@ -82,11 +67,10 @@ class Bigs {
 
     // Umwandlung einer int-Zahl in ein Ziffernfeld
     static int[] fromInt(int n) {
-        String stringInt = Integer.toString(n);
-        char[] strArray = stringInt.toCharArray();
-        int[] nums = new int[strArray.length];
-        for (int i = strArray.length - 1; i >= 0; i--) {
-            nums[(strArray.length - 1 - i)] = Integer.parseInt(Character.toString(strArray[i]));
+        String strNumber = Integer.toString(n);
+        int[] nums = new int[strNumber.length()];
+        for (int i = strNumber.length() - 1; i >= 0; i--) {
+            nums[(strNumber.length() - 1 - i)] = Character.getNumericValue(strNumber.charAt(i));
         }
         return nums;
     }
@@ -94,28 +78,14 @@ class Bigs {
     // kopiert den Wert von a
     static int[] copy(int[] n) {
         int[] clone = new int[n.length];
-        for (int i = 0; i < n.length; i++) {
-            clone[i] = n[i];
-        }
+        System.arraycopy(n, 0, clone, 0, n.length);
         return clone;
     }
 
     // multipliziert das Ziffernfeld a mit einer int-Zahl
     static int[] times(int[] n, int d) {
-        if (n[0] == 0 && n.length == 1) {
-            return new int[]{0};
-        }
-        int[] product = new int[n.length + (String.valueOf(d).length())];
-        for (int i = 0; i < n.length; i++) {
-            product[i] = n[i] * d;
-        }
-        for (int i = 0; i < product.length - 1; i++) {
-            while (product[i] > 9) {
-                product[i] = product[i] - 10;
-                product[i + 1]++;
-            }
-        }
-        return removeZeros(product);
+        int[] dArr = digit(d);
+        return times(n, dArr);
     }
 
     // multipliziert das Ziffernfeld n mit 10
@@ -124,9 +94,7 @@ class Bigs {
             return new int[]{0};
         }
         int[] tenProduct = new int[n.length + 1];
-        for (int i = 0; i < n.length; i++) {
-            tenProduct[i + 1] = n[i];
-        }
+        System.arraycopy(n, 0, tenProduct, 1, n.length);
         tenProduct[0] = 0;
         return removeZeros(tenProduct);
     }
@@ -197,10 +165,7 @@ class Bigs {
                 return false;
             }
         }
-        if ((n[n.length - 1] < 1) && (n.length != 1)) {
-            return false;
-        }
-        return true;
+        return (n[n.length - 1] >= 1) || (n.length == 1);
     }
 
     // gibt die (kleinste) Ziffer mit der groessten Haeufigkeit in n aus
@@ -220,11 +185,9 @@ class Bigs {
         System.out.println(maxPos);
     }
 
-
     public static void main(String[] s) {
         int[] a = One();
         fromInt(123);
-
         for (int i = 0; i < 33222; ++i) {
             a = times(a, 2);
         }
