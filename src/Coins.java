@@ -1,8 +1,8 @@
 public class Coins {
-
-
-    public static long pay (int x) {
+    public static long pay (int toPay, int n) {
         // TODO: implementiert die Funktion | M(x)|, s.o.
+        long possibleCombinations = 0;
+        int[] comboArray = {};
         return 0;
     }
 
@@ -12,7 +12,9 @@ public class Coins {
     }
 
     public static String euro(int cent) {
-        return cent/100 + "," + (((cent%10)/10 == 0) ? "0" + cent%10 : cent%10) + " Euro"; // TODO fix for smaller amounts (10 cents)
+        String centVal = (String.valueOf(cent % 100).length() == 1) ? "0" + cent % 100 : String.valueOf(cent % 100);
+        return (cent > 99) ? cent / 100 + "," + centVal + " Euro" :
+                "00," + centVal + " Euro";
     }
 
     public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class Coins {
             int sum = Integer.parseInt(args[0]);
             System.out.print(euro(sum));
             System.out.print(" kann auf ");
-            System.out.print(pay(sum));
+            System.out.print(pay(sum, 1));
             System.out.println(" verschiedene Arten passend bezahlt werden");
         }
     }
