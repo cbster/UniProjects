@@ -1,22 +1,28 @@
 public class Coins {
 
     private static long pay(int toPay, int n) {
-
-        return 0;
+        long[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
+        if ((toPay < 0) || (n == coins.length - 1)) {  // If toPay < 0, there is no solution, or if we have reached the final coin, there is no solution.
+            return 0;
+        }
+        if (toPay == 0) { // If there are 0 cents to pay, there is only one solution
+            return 1;
+        }
+        return pay((int) (toPay-coins[n]), n) + pay(toPay, n + 1);  // LHS recurs every value below toPay, RHS recurs toPay itself
     }
 
     public static long payCached(int toPay) {
         int[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
-        long[] combos = new long[toPay + 1];
-        combos[0] = 1;
+        long[] combos = new long[toPay + 1];  // Possible numbers of combinations for each amount stored in this array
+        combos[0] = 1;  // There is only one solution for zero cents
         for (int coin : coins) {
             for (int i = 0; i < combos.length; i++) {
-                if (coin <= i) {
-                    combos[i] += combos[i - coin];
-                }
+                if (coin <= i) {  // If the coin's value is less than or equal to the amount
+                    combos[i] += combos[i - coin];  // Take coin value from i, then add the number of ways you can make the change
+                }                                   // to the number of ways you can make i.
             }
         }
-        return combos[toPay];
+        return combos[toPay];  // Returns the total number of ways to make a certain amount
     }
 
     public static String million() {
@@ -39,13 +45,11 @@ public class Coins {
         if (args.length == 0) {
             System.out.println("Aufruf mit Geldbetrag (in Cent) als Parameter");
         } else if (args.length == 1) {
-            // TODO: non-caching solution with pay()
+            int sum = Integer.parseInt(args[0]);
+            System.out.print(euro(sum) + " kann auf " + (pay(sum, 0)) + " verschiedene Arten passend bezahlt werden");
         } else if (args.length == 2) {
             int sum = Integer.parseInt(args[1]);
-            System.out.print(euro(sum));
-            System.out.print(" kann auf ");
-            System.out.print(payCached(sum));
-            System.out.println(" verschiedene Arten passend bezahlt werden");
+            System.out.print(euro(sum) + " kann auf " + (payCached(sum)) + " verschiedene Arten passend bezahlt werden");
         }
     }
 }
