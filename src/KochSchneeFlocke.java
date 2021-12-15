@@ -77,6 +77,21 @@ public class KochSchneeFlocke {
      * @param y5    - y-Koordinate des Endes des aktuellen Linienabschnitts
      */
     public static void zeichneKochKurve(int tiefe, double x1, double y1, double x5, double y5) {
-        // TODO: Implementieren Sie das Zeichnen der Koch-Kurve
+        if (tiefe == 0) {
+            StdDraw.line(x1, y1, x5, y5);
+        }
+        if (tiefe > 0) {
+            double x2 = x1 + ((1.0 / 3.0) * (x5 - x1));
+            double y2 = y1 + ((1.0 / 3.0) * (y5 - y1));
+            double x3 = 0.5 * (x1 + x5) + (Math.sqrt(3) / 6) * (y1 - y5);
+            double y3 = 0.5 * (y1 + y5) + (Math.sqrt(3) / 6) * (x5 - x1);
+            double x4 = x1 + ((2.0 / 3.0) * (x5 - x1));
+            double y4 = y1 + ((2.0 / 3.0) * (y5 - y1));
+
+            zeichneKochKurve(tiefe - 1, x1, y1, x2, y2);
+            zeichneKochKurve(tiefe - 1, x2, y2, x3, y3);
+            zeichneKochKurve(tiefe - 1, x3, y3, x4, y4);
+            zeichneKochKurve(tiefe - 1, x4, y4, x5, y5);
+        }
     }
 }
