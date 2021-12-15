@@ -1,13 +1,31 @@
 public class Coins {
-    public static long pay (int toPay, int n) {
-        // TODO: implementiert die Funktion | M(x)|, s.o.
-        long possibleCombinations = 0;
-        int[] comboArray = {};
+
+    private static long pay(int toPay, int n) {
+
         return 0;
     }
 
+    public static long payCached(int toPay) {
+        int[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
+        long[] combos = new long[toPay + 1];
+        combos[0] = 1;
+        for (int coin : coins) {
+            for (int i = 0; i < combos.length; i++) {
+                if (coin <= i) {
+                    combos[i] += combos[i - coin];
+                }
+            }
+        }
+        return combos[toPay];
+    }
+
     public static String million() {
-        // TODO: ermittelt den kleinsten Betrag, der auf mindestens 1.000.000 verschiedene Weisen bezahlt werden kann
+        for (int i = 0; i <= 1000000; i++) {
+            long numWays = payCached(i);
+            if (numWays >= 1000000) {
+                return "" + i;
+            }
+        }
         return null;
     }
 
@@ -20,11 +38,13 @@ public class Coins {
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Aufruf mit Geldbetrag (in Cent) als Parameter");
-        } else {
-            int sum = Integer.parseInt(args[0]);
+        } else if (args.length == 1) {
+            // TODO: non-caching solution with pay()
+        } else if (args.length == 2) {
+            int sum = Integer.parseInt(args[1]);
             System.out.print(euro(sum));
             System.out.print(" kann auf ");
-            System.out.print(pay(sum, 1));
+            System.out.print(payCached(sum));
             System.out.println(" verschiedene Arten passend bezahlt werden");
         }
     }
