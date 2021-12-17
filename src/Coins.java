@@ -1,14 +1,13 @@
 public class Coins {
-
     private static long pay(int toPay, int n) {
         long[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
-        if ((toPay < 0) || (n == coins.length - 1)) {  // If toPay < 0, there is no solution, or if we have reached the final coin, there is no solution.
-            return 0;
-        }
-        if (toPay == 0) { // If there are 0 cents to pay, there is only one solution
+        if (n == 0 || toPay == 0) {  // If there are 0 cents to pay, there is a way to break that coin into smaller parts
             return 1;
         }
-        return pay((int) (toPay-coins[n]), n) + pay(toPay, n + 1);  // LHS recurs every value below toPay, RHS recurs toPay itself
+        if ((toPay < 0) || (n < 0)) {  // If toPay < 0, there is no solution, or if we have reached the final coin, there is no solution.
+            return 0;
+        }
+        return pay((int) (toPay - coins[n]), n) + pay(toPay, n - 1);  // LHS recurs every value below toPay, RHS recurs toPay itself
     }
 
     public static long payCached(int toPay) {
@@ -45,11 +44,21 @@ public class Coins {
         if (args.length == 0) {
             System.out.println("Aufruf mit Geldbetrag (in Cent) als Parameter");
         } else if (args.length == 1) {
+            if (args[0].equals("-c")) {
+                System.out.println("Aufruf mit Geldbetrag (in Cent) als Parameter");
+            }
             int sum = Integer.parseInt(args[0]);
-            System.out.print(euro(sum) + " kann auf " + (pay(sum, 0)) + " verschiedene Arten passend bezahlt werden");
+            System.out.println(euro(sum) + " kann auf " + (pay(sum, 7)) + " verschiedene Arten passend bezahlt werden");
         } else if (args.length == 2) {
             int sum = Integer.parseInt(args[1]);
-            System.out.print(euro(sum) + " kann auf " + (payCached(sum)) + " verschiedene Arten passend bezahlt werden");
+            System.out.println(euro(sum) + " kann auf " + (payCached(sum)) + " verschiedene Arten passend bezahlt werden");
         }
     }
 }
+
+/*if (v == 0) return 1;
+    if (v < 0) return 0;
+        if (n == a1.length) return 0;
+        if (a1[n] > v) return 0;
+
+        return f(v-a1[n], n) + f(v, n+1);*/
