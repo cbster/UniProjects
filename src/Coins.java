@@ -1,11 +1,24 @@
 public class Coins {
     private static long pay(int toPay, int n) {
         long[] coins = {1, 2, 5, 10, 20, 50, 100, 200};
-        if (n == 0 || toPay == 0) {  // If there are 0 cents to pay, there is a way to break that coin into smaller parts
+
+        if (coins[n] == 1 || toPay == 0) {  // If there are 0 cents to pay, there is a way to break that coin into smaller parts
             return 1;
         }
-        if ((toPay < 0) || (n < 0)) {  // If toPay < 0, there is no solution, or if we have reached the final coin, there is no solution.
+        if ((toPay < 0)) {  // If toPay < 0, there is no solution, or if we have reached the final coin, there is no solution.
             return 0;
+        }
+        if (coins[n] == 2) {
+            return (toPay/2) + 1;
+        }
+        if (coins[n] == 5) {
+            return (long) (1 + (0.4 * toPay) + (0.05*(Math.pow(toPay, 2))));
+        }
+        if (coins[n] == 10) {
+            return (long) Math.ceil(1 + ((23 * toPay)/60) + (0.045*(Math.pow(toPay, 2))) + (Math.pow(toPay, 3)/600));
+        }
+        if (coins[n] > toPay) {
+            return pay(toPay, n - 1);
         }
         return pay((int) (toPay - coins[n]), n) + pay(toPay, n - 1);  // LHS recurs every value below toPay, RHS recurs toPay itself
     }
@@ -56,9 +69,15 @@ public class Coins {
     }
 }
 
-/*if (v == 0) return 1;
-    if (v < 0) return 0;
-        if (n == a1.length) return 0;
-        if (a1[n] > v) return 0;
+// JS Implementation for recursive tree drawing
 
-        return f(v-a1[n], n) + f(v, n+1);*/
+/*
+if (v == 0) return 1;
+if (n == 0) return 1;
+if (n == 1) return  Math.floor(v/2) + 1;
+if (n == 2) return (1 + (0.4*v) + (0.05*(Math.pow(v, 2))));
+if (n == 3) return Math.ceil((1 + (23 * v)/60 + (0.045*(Math.pow(v, 2))) + (Math.pow(v, 3)/600)));
+if (v < 0) return 0;
+if (a1[n] > v) return f(v, n-1);
+return f(v-a1[n], n) + f(v, n-1);
+*/
