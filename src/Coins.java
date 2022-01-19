@@ -71,7 +71,6 @@ public class Coins {
             } else {
                 int sum = Integer.parseInt(args[0]);
                 System.out.println(euro(sum) + " kann auf " + (pay(sum)) + " verschiedene Arten passend bezahlt werden");
-                System.out.println(million());
             }
         } else if (args.length == 2) {
             int sum = Integer.parseInt(args[1]);
