@@ -4,7 +4,7 @@ public final class Mate extends Getraenk {
 
     public Mate(String name) {
         super(name, 500);
-    }
+    } // Menge is always 500, as specified here
 
     @Override
     public boolean trinken() {
@@ -12,7 +12,7 @@ public final class Mate extends Getraenk {
             menge = 0;
             return false;
         } else {
-            menge = menge - 100;
+            menge -= 100;
             return true;
         }
     }
