@@ -11,10 +11,10 @@ public abstract class Lebensmittel {
 
     public Lebensmittel(int type, int menge) {  // Second constructor for bread as we are given a type instead of a name
         switch (type) {
-            case 0 -> this.name = "Weißbrot";
-            case 1 -> this.name = "Schwarzbrot";
-            case 2 -> this.name = "Mischbrot";
-            default -> this.name = "Spezialbrot";
+            case 0: this.name = "Weißbrot"; break;
+            case 1: this.name = "Schwarzbrot"; break;
+            case 2: this.name = "Mischbrot"; break;
+            default: this.name = "Spezialbrot"; break;
         }
         this.menge = menge;  // Menge is still given as in the constructor above
     }
