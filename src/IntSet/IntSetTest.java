@@ -45,8 +45,14 @@ class IntSetTest {
 
 		s4=IntSet.union(s4, s3);
 		trace("s4 = " + s4);
-		s4=s4.complement();
+		//s4=s4.complement();
 		trace("s4 = " + s4);
+
+		for (IntSet.Iterator it = s4.iterator(); it.hasNext();) {
+			System.out.println(it.hasNext());
+			System.out.println(it.next());
+
+		}
 
 		IntSet s5 = new IntSet(10);
 		for (IntSet.Iterator it = s4.iterator(); it.hasNext(); ) {

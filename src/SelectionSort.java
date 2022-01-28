@@ -12,8 +12,9 @@ public class SelectionSort {
             }
             lineArray[i] = lineArray[i].concat(Integer.toString(count));
         }
+
         int sortedLines = 0;
-        for (int i = 200; i >= 0; i--) { // occurrence counter // TODO change i < 100?
+        for (int i = 200; i >= 0; i--) { // occurrence counter // TODO change i?
             for (int j = sortedLines; j < lineArray.length; j++) { // line counter
                 if (Integer.parseInt(lineArray[j].substring(lineArray[j].length()-1)) == i) {
                     String temp = lineArray[sortedLines];
