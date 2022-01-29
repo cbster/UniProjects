@@ -101,7 +101,7 @@ public class IntSet {
      * @param s2 verknuepft werden sollen
      * @return die Differenzmenge
      */
-    public static IntSet difference(IntSet s1, IntSet s2) {
+    public static IntSet difference(IntSet s1, IntSet s2) { // todo this is not the difference they want - should return s1 - s2 (all numbers in s1 minus those that also appear in s2)
         IntSet newIntSet = new IntSet(s1.capacity());
         System.arraycopy(s1.set, 0, newIntSet.set, 0, s1.set.length);
         for (int i = 0; i < Math.min(s1.set.length, s2.set.length); i++) {
