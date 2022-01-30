@@ -17,13 +17,9 @@ class IntSetTest {
 		IntSet s2 = new IntSet(20);
 
 		s1.include(5);
-		System.out.println(s1.bits());
-		System.out.println(s1);
 		trace("s1.complement() = " + s1.complement());
 		s2.include(15);
 		trace("s2.complement() = " + s2.complement());
-		IntSet testSet = IntSet.difference(s1, s2);
-		trace(""+testSet);
 
 		trace("s1 = " + s1);
 		trace("s2 = " + s2);
@@ -45,14 +41,8 @@ class IntSetTest {
 
 		s4=IntSet.union(s4, s3);
 		trace("s4 = " + s4);
-		//s4=s4.complement();
+		s4=s4.complement();
 		trace("s4 = " + s4);
-
-		for (IntSet.Iterator it = s4.iterator(); it.hasNext();) {
-			System.out.println(it.hasNext());
-			System.out.println(it.next());
-
-		}
 
 		IntSet s5 = new IntSet(10);
 		for (IntSet.Iterator it = s4.iterator(); it.hasNext(); ) {
