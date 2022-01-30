@@ -1,7 +1,7 @@
 package IntSet;
 
 /**
- * Mengen nichtnegativer ganzer Zahlen in kompakter Speicherrepraesentation: ob eine Zahl in der Menge enthalten ist, wir durch EIN BIT im Speicher erfasst!
+ * Mengen nicht negativer ganzer Zahlen in kompakter Speicherrepraesentation: ob eine Zahl in der Menge enthalten ist, wir durch EIN BIT im Speicher erfasst!
  * Beispiel:
  *
  * IntSet set = new IntSet(8);
@@ -13,11 +13,11 @@ package IntSet;
  * ... +---+---+---+---+---+---+---+---+
  */
 public class IntSet {
-    int arrayLength;
-    int[] set;
+    private final int arrayLength;
+    private int[] set;
 
     /**
-     * konstruiert ein leere Zahlenmenge der Kapazitaet n: eine Menge, die (nichtnegative ganze) Zahlen im Bereich 0 bis n-1 als Elemente enthalten kann
+     * konstruiert eine leere Zahlenmenge der Kapazitaet n: eine Menge, die (nichtnegative ganze) Zahlen im Bereich 0 bis n-1 als Elemente enthalten kann
      * @param n die Kapazitaet der Menge
      */
     public IntSet(int n) {
@@ -57,7 +57,7 @@ public class IntSet {
      * @return ist e in dieser Menge enthalten?
      */
     public boolean element(int e) {
-        return e > this.capacity() ? false : ((1 << e%32 & set[(int) Math.ceil((float) e/32)]) > 0);  // Bit-masking to check for activated bit at element's position
+        return e <= this.capacity() && ((1 << e % 32 & set[e / 32]) > 0);  // Bit-masking to check for activated bit at element's position
     }
 
     /**
@@ -101,11 +101,12 @@ public class IntSet {
      * @param s2 verknuepft werden sollen
      * @return die Differenzmenge
      */
-    public static IntSet difference(IntSet s1, IntSet s2) { // todo this is not the difference they want - should return s1 - s2 (all numbers in s1 minus those that also appear in s2)
-        IntSet newIntSet = new IntSet(s1.capacity());
-        System.arraycopy(s1.set, 0, newIntSet.set, 0, s1.set.length);
-        for (int i = 0; i < Math.min(s1.set.length, s2.set.length); i++) {
-            newIntSet.set[i] = s1.set[i] ^ s2.set[i];
+    public static IntSet difference(IntSet s1, IntSet s2) throws SetError {
+        IntSet newIntSet = new IntSet(s1.arrayLength);
+        for (int i = 0; i < Math.max(s1.arrayLength, s2.arrayLength); i++) {
+            if (s1.element(i) && !s2.element(i)) {
+                newIntSet.include(i);
+            }
         }
         return newIntSet;
     }
@@ -159,11 +160,11 @@ public class IntSet {
                 break;
             }
             if (bit == 49) { // If bit is set (1)
-                result.append(" ").append(counter).append(" ");
+                result.append(counter).append(" ");
             }
             counter++;
         }
-        return result.append(" }").toString();
+        return result.append("}").toString();
     }
 
     /**
@@ -198,9 +199,9 @@ public class IntSet {
     }
 
     public class Iterator {
-        IntSet origin; // IntSet from which the Iterator is created
-        int position;
-        int capacity;
+        private final IntSet origin; // IntSet from which the Iterator is created
+        private int position;
+        private final int capacity;
 
         /**
          * erzeugt einen Iterator ueber s
